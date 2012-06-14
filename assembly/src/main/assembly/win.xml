@@ -58,11 +58,10 @@
                 <include>bin/*</include>
             </includes>
             <excludes>
-                <exclude>bin/karaf</exclude>
-                <exclude>bin/shell</exclude>
-                <exclude>bin/start</exclude>
-                <exclude>bin/stop</exclude>
-                <exclude>bin/admin</exclude>
+                <exclude>bin/karaf.bat</exclude>
+                <exclude>bin/start.bat</exclude>
+                <exclude>bin/stop.bat</exclude>
+                <exclude>bin/admin.bat</exclude>
             </excludes>
             <lineEnding>dos</lineEnding>
             <fileMode>0644</fileMode>
@@ -90,7 +89,7 @@
         <file>
             <source>${basedir}/target/dependencies/win/apache-karaf-${karaf.version}/bin/karaf.bat</source>
             <outputDirectory>/bin/</outputDirectory>
-            <destName>jclouds.bat</destName>
+            <destName>jclouds-cli.bat</destName>
             <lineEnding>dos</lineEnding>
             <fileMode>0644</fileMode>
         </file>

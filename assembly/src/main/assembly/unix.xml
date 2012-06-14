@@ -59,8 +59,8 @@
                 <include>bin/*</include>
             </includes>
             <excludes>
-                <exclude>bin/karaf</exclude>
                 <exclude>bin/shell</exclude>
+                <exclude>bin/karaf</exclude>
                 <exclude>bin/start</exclude>
                 <exclude>bin/stop</exclude>
                 <exclude>bin/admin</exclude>
@@ -79,6 +79,17 @@
             <fileMode>0644</fileMode>
         </fileSet>
 
+        <!-- Copy over resources -->
+        <fileSet>
+            <directory>target/classes/bin</directory>
+            <outputDirectory>/bin/</outputDirectory>
+            <includes>
+                <include>**</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
         <!-- Add jclouds features to system repository -->
         <fileSet>
             <outputDirectory>system</outputDirectory>
@@ -90,7 +101,7 @@
         <file>
             <source>${basedir}/target/dependencies/unix/apache-karaf-${karaf.version}/bin/karaf</source>
             <outputDirectory>/bin/</outputDirectory>
-            <destName>jclouds</destName>
+            <destName>jclouds-cli</destName>
             <fileMode>0755</fileMode>
             <lineEnding>unix</lineEnding>
         </file>
