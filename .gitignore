@@ -1,6 +1,12 @@
+*.i??
 *.class
-
-# Package Files #
 *.jar
 *.war
 *.ear
+.idea
+.project
+.classpath
+.settings
+target
+eclipse-classes
+bin
