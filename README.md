@@ -19,7 +19,7 @@ To start the interactive shell:
 Using the script
 ----------------
 To use the scirpt:
-./bin/jclouds <category> <action> <options> <arguments>.
+./bin/jclouds [category] [action] [options] [arguments].
 
 Categories: node, group, image, location, hardware.
 Actions: list, create, destroy, runscript.
@@ -27,13 +27,13 @@ Options: --provider, --identity, --credential --endpoint etc.
 
 Some examples:
 To create 10 nodes on EC2 under group: myGroupName using Ubuntu 10.04
-./jclouds node create --provider aws-ec2 --identity <identity> --credential <credential> --os-family ubuntu --os-version 10.04 --adminAcess myGroupName 10
+./jclouds node create --provider aws-ec2 --identity [identity] --credential [credential] --os-family ubuntu --os-version 10.04 --adminAcess myGroupName 10
 
 To list all nodes:
-./jclouds node list --provider aws-ec2 --identity <identity> --credential <credential>
+./jclouds node list --provider aws-ec2 --identity [identity] --credential [credential]
 
 To destroy a node:
-./jclouds node destroy <node id>
+./jclouds node destroy [node id]
 
 
 
