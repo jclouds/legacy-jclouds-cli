@@ -114,6 +114,13 @@
                 <include>xalan:serializer</include>
             </includes>
         </dependencySet>
+        <dependencySet>
+            <outputDirectory>/system/org/jclouds/cli/runner/${project.version}/</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>org.jclouds.cli:runner</include>
+            </includes>
+        </dependencySet>
     </dependencySets>
 
 </assembly>
