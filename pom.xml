@@ -34,7 +34,7 @@
 
     <properties>
         <!-- Karaf Version Dependencies -->
-        <karaf.version>2.2.8-SNAPSHOT</karaf.version>
+        <karaf.version>2.2.7</karaf.version>
         <pax.url.version>1.2.8</pax.url.version>
         <pax.logging.version>1.6.5</pax.logging.version>
         <felix.configadmin.version>1.2.8</felix.configadmin.version>
@@ -46,7 +46,7 @@
         <felix.fileinstall.version>3.2.2</felix.fileinstall.version>
 
 
-        <jclouds.karaf.version>1.5.0-SNAPSHOT</jclouds.karaf.version>
+        <jclouds.karaf.version>1.5.0-beta.3</jclouds.karaf.version>
         <!-- Plugin Versions -->
         <maven-assembly-plugin.version>2.2.1</maven-assembly-plugin.version>
         <maven-bundle-plugin.version>2.1.0</maven-bundle-plugin.version>
