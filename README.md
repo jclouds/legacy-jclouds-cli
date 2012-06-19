@@ -16,9 +16,9 @@ To start the interactive shell:
 ./bin/jclouds-cli
 
 
-Using the script
+Using the CLI
 ----------------
-To use the scirpt:
+To use the cli:
 ./bin/jclouds **[category]** **[action]** **[options]** **[arguments]**.
 
 * *Categories*: node, group, image, location, hardware.
@@ -40,6 +40,17 @@ To destroy a node:
 <pre>
 ./jclouds node destroy [node id]
 </pre>
+
+Leveraging environmental variables
+-----------------------------------
+Both in the interactive shell and cli modes, you may find repeating the provider information again and again not really friendly.
+You can completely skip those options by sepcifying them as environmental variables.
+
+Supported variables:
+* **JCLOUDS_PROVIDER**
+* **JCLOUDS_IDENTITY**
+* **JCLOUDS_CREDENTIAL**
+
 
 
 
