@@ -130,7 +130,7 @@
                                     mvn:org.jclouds.karaf/jclouds-karaf/${jclouds.karaf.version}/xml/features
                                 </descriptor>
                             </descriptors>
-                            <features>
+                            <!--features>
                                 <feature>config</feature>
                                 <feature>jclouds-commands</feature>
                                 <feature>jclouds-aws-ec2</feature>
@@ -139,7 +139,7 @@
                                 <feature>jclouds-cloudserver-uk</feature>
                                 <feature>jclouds-cloudfiles-us</feature>
                                 <feature>jclouds-cloudfiles-uk</feature>
-                            </features>
+                            </features-->
                             <includeMvnBasedDescriptors>true</includeMvnBasedDescriptors>
                             <repository>target/features-repo</repository>
                         </configuration>
