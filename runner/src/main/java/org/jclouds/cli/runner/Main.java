@@ -29,7 +29,9 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import jline.Terminal;
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.gogo.commands.Command;
@@ -40,7 +42,6 @@ import org.apache.felix.gogo.runtime.CommandProcessorImpl;
 import org.apache.felix.gogo.runtime.threadio.ThreadIOImpl;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
-import org.apache.felix.service.threadio.ThreadIO;
 import org.apache.karaf.shell.console.NameScoping;
 import org.apache.karaf.shell.console.jline.Console;
 import org.apache.karaf.shell.console.jline.TerminalFactory;
@@ -51,6 +52,9 @@ import org.fusesource.jansi.AnsiConsole;
  * This is forked from Apache Karaf and aligned to the needs of jclouds cli.
  */
 public class Main {
+    private static final String KARAF_HOME = "karaf.home";
+    private static final Class[] parameters = new Class[] {URL.class};
+
     private String application = System.getProperty("karaf.name", "root");
     private String user = "karaf";
 
@@ -70,8 +74,12 @@ public class Main {
         ThreadIOImpl threadio = new ThreadIOImpl();
         threadio.start();
 
+        ClassLoader cl = Main.class.getClassLoader();
+        //This is a workaround for windows machines struggling with long class paths.
+        loadSystemJars();
         CommandProcessorImpl commandProcessor = new CommandProcessorImpl(threadio);
-        discoverCommands(commandProcessor, Main.class.getClassLoader());
+
+        discoverCommands(commandProcessor, cl);
 
         InputStream in = unwrap(System.in);
         PrintStream out = wrap(unwrap(System.out));
@@ -84,41 +92,35 @@ public class Main {
         System.exit(0);
     }
 
-    /**
-     * Use this method when the shell is being executed as a command
-     * of another shell.
-     *
-     * @param parent
-     * @param args
-     * @throws Exception
-     */
-    public void run(CommandSession parent, String args[]) throws Exception {
 
-        // TODO: find out what the down side of not using a real ThreadIO implementation is.
-        CommandProcessorImpl commandProcessor = new CommandProcessorImpl(new ThreadIO() {
-            public void setStreams(InputStream in, PrintStream out, PrintStream err) {
+    public void loadSystemJars() throws IOException {
+        Queue<File> dirs = new LinkedList<File>();
+        dirs.add(new File(System.getProperty(KARAF_HOME) + File.separator + "system"));
+        while (!dirs.isEmpty()) {
+            for (File f : dirs.poll().listFiles()) {
+                if (f.isDirectory()) {
+                    dirs.add(f);
+                } else if (f.isFile() && f.getAbsolutePath().endsWith(".jar")) {
+                    addURL(f.toURI().toURL());
+                }
             }
+        }
+    }
 
-            public void close() {
-            }
-        });
+    public static void addURL(URL u) throws IOException
+    {
+        URLClassLoader sysloader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+        Class sysclass = URLClassLoader.class;
 
-        ClassLoader cl = Main.class.getClassLoader();
-        if (args.length > 0 && args[0].startsWith("--classpath=")) {
-            String base = args[0].substring("--classpath=".length());
-            List<URL> urls = getFiles(new File(base));
-            cl = new URLClassLoader(urls.toArray(new URL[urls.size()]), cl);
-            String[] a = new String[args.length - 1];
-            System.arraycopy(args, 1, a, 0, a.length);
-            args = a;
+        try {
+            Method method = sysclass.getDeclaredMethod("addURL", parameters);
+            method.setAccessible(true);
+            method.invoke(sysloader, new Object[] {u});
+        } catch (Throwable t) {
+            t.printStackTrace();
+            throw new IOException("Error, could not add URL to system classloader");
         }
 
-        discoverCommands(commandProcessor, cl);
-
-        InputStream in = parent.getKeyboard();
-        PrintStream out = parent.getConsole();
-        PrintStream err = parent.getConsole();
-        run(commandProcessor, args, in, out, err);
     }
 
     private void run(final CommandProcessorImpl commandProcessor, String[] args, final InputStream in, final PrintStream out, final PrintStream err) throws Exception {

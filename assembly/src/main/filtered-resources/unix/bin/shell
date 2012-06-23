@@ -261,9 +261,10 @@ setupDefaults() {
     fi
 
     # Setup classpath
-    CLASSPATH="$KARAF_HOME/system/org/apache/karaf/shell/org.apache.karaf.shell.console/${project.version}/org.apache.karaf.shell.console-${project.version}.jar"
+    CLASSPATH="$KARAF_HOME/system/org/jclouds/cli/runner/${project.version}/runner-${project.version}.jar"
+    CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/apache/karaf/shell/org.apache.karaf.shell.console/${karaf.version}/org.apache.karaf.shell.console-${karaf.version}.jar"
     CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/ops4j/pax/logging/pax-logging-api/${pax.logging.version}/pax-logging-api-${pax.logging.version}.jar"
-    CLASSPATH="$CLASSPATH:$(find "$KARAF_HOME/system/" -name '*.jar' |xargs echo  |tr ' ' ':')"
+    #CLASSPATH="$CLASSPATH:$(find "$KARAF_HOME/system/" -name '*.jar' |xargs echo  |tr ' ' ':')"
 
     DEFAULT_JAVA_DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
 

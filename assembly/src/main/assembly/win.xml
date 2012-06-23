@@ -58,6 +58,7 @@
                 <include>bin/*</include>
             </includes>
             <excludes>
+                <exclude>bin/shell.bat</exclude>
                 <exclude>bin/karaf.bat</exclude>
                 <exclude>bin/start.bat</exclude>
                 <exclude>bin/stop.bat</exclude>
@@ -73,6 +74,16 @@
             <outputDirectory>/etc/</outputDirectory>
             <includes>
                 <include>*.*</include>
+            </includes>
+            <lineEnding>dos</lineEnding>
+            <fileMode>0644</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>target/classes/win/bin</directory>
+            <outputDirectory>/bin/</outputDirectory>
+            <includes>
+                <include>**</include>
             </includes>
             <lineEnding>dos</lineEnding>
             <fileMode>0644</fileMode>
