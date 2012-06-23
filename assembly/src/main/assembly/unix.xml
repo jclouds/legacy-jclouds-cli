@@ -81,7 +81,7 @@
 
         <!-- Copy over resources -->
         <fileSet>
-            <directory>target/classes/bin</directory>
+            <directory>target/classes/unix/bin</directory>
             <outputDirectory>/bin/</outputDirectory>
             <includes>
                 <include>**</include>
