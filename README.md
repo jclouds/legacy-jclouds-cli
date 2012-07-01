@@ -15,6 +15,51 @@ Using the interactive shell
 To start the interactive shell:
 ./bin/jclouds-cli
 
+The are two ways of configuring a provider or api, when using the interactive mode:
+
+* **As command options**
+* **As a Service**
+
+All commands support the following options that you can use: --provider (use this for apis too), --identity, --credential --endpoint.
+
+For example, in a fresh installation you can simple:
+
+<pre>
+jclouds:node-list --provider [my provider or api] --identity [my identity] --credential [my credential] --endpoint [my endpoint]
+</pre>
+
+If you want to avoid passing the same options all the time, you can configure the provider or the api once and reuse it. To configure the provider or the api:
+
+For compute providers & apis:
+
+<pre>
+config:edit org.jclouds.compute-[some id]
+config:propset provider [my provider or api]
+config:propset identity [my identity]
+config:propset credential [my credential]
+config:propset endpoint [my endpoint] **(this is only required for apis)**
+config:update
+</pre>
+
+For blobstore providers or apis:
+
+<pre>
+config:edit org.jclouds.blobstore-[some id]
+config:propset provider [my provider or api]
+config:propset identity [my identity]
+config:propset credential [my credential]
+config:propset endpoint [my endpoint] **(this is only required for apis)**
+config:update
+</pre>
+
+These commands, will create a new configuration with the filename specified as an argument. Each configuration will be assigned a new unique id, which you can use if you need to edit or delete the config in the future.
+
+Once the service is configured, you can verify the service installation using:
+
+<pre>
+jclouds:compute-list **(for compute providers and apis)**
+jclouds:blobstore-list **(for blobstore providers and apis)**
+</pre>
 
 Using the CLI
 ----------------
@@ -23,7 +68,7 @@ To use the cli:
 
 * *Categories*: node, group, image, location, hardware.
 * *Actions*: list, create, destroy, runscript.
-* *Options*: --provider, --identity, --credential --endpoint etc.
+* *Options*: --provider(use this for apis too), --identity, --credential --endpoint etc.
 
 Some examples:
 To create 10 nodes on EC2 under group: myGroupName using Ubuntu 10.04
