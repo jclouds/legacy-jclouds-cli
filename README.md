@@ -94,6 +94,20 @@ jclouds:compute-service-destroy --provider [provider]
 jclouds:blobstore-service-destroy --provider [provider]
 </pre>
 
+**Installing additional providers and api**
+The interactive version of the cli will have out of the box installed support for the mainstream providers and apis. To enable the any other provider or api, you will need to enable it.
+This is done using the features commands.
+
+List the available jclouds modules:
+<pre>
+features:list
+</pre>
+
+To install an additional api *(say cloudstack)*
+<pre>
+features:install jclouds-api-cloudstack
+</pre>
+
 
 Leveraging environmental variables
 -----------------------------------
