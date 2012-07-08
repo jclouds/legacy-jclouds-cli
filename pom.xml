@@ -26,6 +26,36 @@
     <name>jclouds :: cli</name>
     <version>1.5.0-SNAPSHOT</version>
 
+    <url>https://github.com/jclouds/jclouds-cli</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/jclouds/jclouds-cli.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jclouds/jclouds-cli.git</developerConnection>
+        <url>http://github.com/jclouds/jclouds-cli</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>iocanel</id>
+            <name>Ioannis Canellos</name>
+            <email>iocanel@gmail.com</email>
+            <url>http://iocanel.blogspot.com</url>
+        </developer>
+        <developer>
+            <id>abayer</id>
+            <name>Andew Bayer</name>
+            <email>abayer@apache.org</email>
+            <url>http://andrewbayer.com</url>
+        </developer>
+    </developers>
+
     <modules>
         <module>branding</module>
         <module>assembly</module>
@@ -111,4 +141,54 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <!-- modifies the plugin config inherited from oss-parent -->
+        <profile>
+            <id>sonatype-release-profile-extension</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <configuration>
+                            <executable>${gpg.command}</executable>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <uniqueVersion>false</uniqueVersion>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
