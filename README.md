@@ -63,34 +63,36 @@ If you want to avoid passing the same options all the time, you can configure th
 For compute providers & apis:
 
 <pre>
-config:edit org.jclouds.compute-[some id]
-config:propset provider [my provider or api]
-config:propset identity [my identity]
-config:propset credential [my credential]
-config:propset endpoint [my endpoint] **(this is only required for apis)**
-config:update
+jclouds:compute-service-create --provider [provider] --identity [identity] --credential [credential]
+</pre>
+
+<pre>
+jclouds:compute-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
 </pre>
 
 For blobstore providers or apis:
 
 <pre>
-config:edit org.jclouds.blobstore-[some id]
-config:propset provider [my provider or api]
-config:propset identity [my identity]
-config:propset credential [my credential]
-config:propset endpoint [my endpoint] **(this is only required for apis)**
-config:update
+jclouds:blobstore-service-create --provider [provider] --identity [identity] --credential [credential]
 </pre>
-
-These commands, will create a new configuration with the filename specified as an argument. Each configuration will be assigned a new unique id, which you can use if you need to edit or delete the config in the future.
-
-Once the service is configured, you can verify the service installation using:
 
 <pre>
-jclouds:compute-list **(for compute providers and apis)**
-jclouds:blobstore-list **(for blobstore providers and apis)**
+jclouds:blobstore-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
 </pre>
 
+To list the available compute or blobstore services:
+
+<pre>
+jclouds:compute-service-list **(for compute providers and apis)**
+jclouds:blobstore-service-list **(for blobstore providers and apis)**
+</pre>
+
+You can also remove one of the services:
+
+<pre>
+jclouds:compute-service-destroy --provider [provider]
+jclouds:blobstore-service-destroy --provider [provider]
+</pre>
 
 
 Leveraging environmental variables
