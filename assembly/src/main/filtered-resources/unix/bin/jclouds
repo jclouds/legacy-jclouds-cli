@@ -37,11 +37,36 @@ locateHome() {
 
 validateArguments() {
     if [ "x$CATEGORY" == "x" ]; then
-        die "Usage:jclouds {category} {action} {arguments}."
+        echo "Usage:jclouds {category} {action} {options/arguments}."
+        echo ""
+        echo "Categories: node, group, image, location hardware"
+        echo "Actions: list, create, destroy, runscript"
+        echo ""
+        echo "Options:"
+        echo "--proivder:\t\t The id of the provider."
+        echo "--api:\t\t\t The id of the api."
+        echo "--endpoint:\t\t The endpoint."
+        echo "--identity:\t\t The identity."
+        echo "--credential:\t\t The credential."
+        exit -1
     fi
     if [ "x$ACTION" == "x" ]; then
-            die "Usage:jclouds {category} {action} {arguments}."
+        echo "Usage:jclouds {category} {action} {options/arguments}."
+        echo ""
+        echo "Categories: node, group, image, location hardware"
+        echo "Actions: list, create, destroy, runscript"
+        echo ""
+        echo "Options:"
+        echo "--proivder:\t\t The id of the provider."
+        echo "--api:\t\t\t The id of the api."
+        echo "--endpoint:\t\t The endpoint."
+        echo "--identity:\t\t The identity."
+        echo "--credential:\t\t The credential."
+        exit -1
         fi
+}
+warn() {
+    echo "${PROGNAME}: $*"
 }
 
 die() {
