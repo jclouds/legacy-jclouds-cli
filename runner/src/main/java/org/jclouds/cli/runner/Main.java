@@ -32,6 +32,8 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import jline.Terminal;
 import org.apache.felix.gogo.commands.Action;
 import org.apache.felix.gogo.commands.Command;
@@ -100,7 +102,8 @@ public class Main {
             for (File f : dirs.poll().listFiles()) {
                 if (f.isDirectory()) {
                     dirs.add(f);
-                } else if (f.isFile() && f.getAbsolutePath().endsWith(".jar")) {
+                } else if (f.isFile() && f.getAbsolutePath().endsWith(".jar") && !f.getAbsolutePath().contains("pax-logging")) {
+                    //We make sure to exclude pax logging jars when running outside of OSGi, since we use external logging jars in that case.
                     addURL(f.toURI().toURL());
                 }
             }

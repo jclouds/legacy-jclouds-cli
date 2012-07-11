@@ -263,9 +263,9 @@ setupDefaults() {
     # Setup classpath
     CLASSPATH="$KARAF_HOME/system/org/jclouds/cli/runner/${project.version}/runner-${project.version}.jar"
     CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/apache/karaf/shell/org.apache.karaf.shell.console/${karaf.version}/org.apache.karaf.shell.console-${karaf.version}.jar"
-    CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/ops4j/pax/logging/pax-logging-api/${pax.logging.version}/pax-logging-api-${pax.logging.version}.jar"
-    CLASSPATH="$CLASSPATH:$KARAF_HOME/conf"
-    #CLASSPATH="$CLASSPATH:$(find "$KARAF_HOME/system/" -name '*.jar' |xargs echo  |tr ' ' ':')"
+    #We set external libraries for logging.
+    CLASSPATH="$CLASSPATH:$KARAF_HOME/lib/other/slf4j-api-${slf4j.version}.jar:$KARAF_HOME/lib/other/slf4j-log4j12-${slf4j.version}.jar:$KARAF_HOME/lib/other/log4j-${log4j.version}.jar"
+    CLASSPATH="$CLASSPATH:$KARAF_HOME/etc/log4j.properties"
 
     DEFAULT_JAVA_DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
 
@@ -317,7 +317,7 @@ run() {
         CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
     fi
 
-    exec $JAVA $JAVA_OPTS -Dkaraf.instances="${KARAF_HOME}/instances" -Dkaraf.home="$KARAF_HOME" -Dkaraf.base="$KARAF_BASE" -Djava.io.tmpdir="$KARAF_DATA/tmp" -Djava.util.logging.config.file=$KARAF_BASE/etc/java.util.logging.properties $KARAF_OPTS $OPTS -classpath "$CLASSPATH" org.jclouds.cli.runner.Main "$@"
+    exec $JAVA $JAVA_OPTS -Dkaraf.instances="${KARAF_HOME}/instances" -Dkaraf.home="$KARAF_HOME" -Dkaraf.base="$KARAF_BASE" -Djava.io.tmpdir="$KARAF_DATA/tmp" -Dlog4j.configuration=file://$KARAF_BASE/etc/log4j.properties $KARAF_OPTS $OPTS -classpath "$CLASSPATH" org.jclouds.cli.runner.Main "$@"
 }
 
 main() {

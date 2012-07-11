@@ -78,15 +78,6 @@
             <lineEnding>dos</lineEnding>
             <fileMode>0644</fileMode>
         </fileSet>
-        <fileSet>
-            <directory>target/classes/conf</directory>
-            <outputDirectory>/conf/</outputDirectory>
-            <includes>
-                <include>*.*</include>
-            </includes>
-            <lineEnding>dos</lineEnding>
-            <fileMode>0644</fileMode>
-        </fileSet>
 
         <fileSet>
             <directory>target/classes/win/bin</directory>
@@ -139,6 +130,15 @@
             <fileMode>0644</fileMode>
             <includes>
                 <include>org.jclouds.cli:runner</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>lib/other/</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>org.slf4j:slf4j-api</include>
+                <include>org.slf4j:slf4j-log4j12</include>
+                <include>log4j:log4j</include>
             </includes>
         </dependencySet>
     </dependencySets>

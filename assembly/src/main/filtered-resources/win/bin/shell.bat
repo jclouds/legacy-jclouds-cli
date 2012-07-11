@@ -113,14 +113,14 @@ if "%KARAF_DEBUG%" == "" goto :KARAF_DEBUG_END
 
 set CLASSPATH=%KARAF_HOME%\system\org\jclouds\cli\runner\${project.version}\runner-${project.version}.jar
 set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\system\org\apache\karaf\shell\org.apache.karaf.shell.console\${karaf.version}\org.apache.karaf.shell.console-${karaf.version}.jar
-set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\system\org\ops4j\pax\logging\pax-logging-api\${pax.logging.version}\pax-logging-api-${pax.logging.version}.jar
-set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\conf
+set CLASSPATH="%CLASSPATH%;%KARAF_HOME%/lib/other/slf4j-api-${slf4j.version}.jar;%KARAF_HOME%/lib/other/slf4j-log4j12-${slf4j.version}.jar;%KARAF_HOME%/lib/other/log4j-${log4j.version}.jar"
+set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\etc\log4j.properties
 
 :EXECUTE
     if "%SHIFT%" == "true" SET ARGS=%2 %3 %4 %5 %6 %7 %8
     if not "%SHIFT%" == "true" SET ARGS=%1 %2 %3 %4 %5 %6 %7 %8
     rem Execute the Java Virtual Machine
-    "%JAVA%" %JAVA_OPTS% %OPTS% -classpath "%CLASSPATH%" -Dkaraf.instances="%KARAF_HOME%\instances" -Dkaraf.home="%KARAF_HOME%" -Dkaraf.base="%KARAF_BASE%" -Djava.io.tmpdir="%KARAF_DATA%\tmp" -Djava.util.logging.config.file="%KARAF_BASE%\etc\java.util.logging.properties" %KARAF_OPTS% org.jclouds.cli.runner.Main %ARGS%
+    "%JAVA%" %JAVA_OPTS% %OPTS% -classpath "%CLASSPATH%" -Dkaraf.instances="%KARAF_HOME%\instances" -Dkaraf.home="%KARAF_HOME%" -Dkaraf.base="%KARAF_BASE%" -Djava.io.tmpdir="%KARAF_DATA%\tmp" -Dlog4j.configuration="file:///%KARAF_BASE%\etc\java.util.logging.properties" %KARAF_OPTS% org.jclouds.cli.runner.Main %ARGS%
 
 rem # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
