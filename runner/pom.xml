@@ -19,13 +19,13 @@
     <parent>
         <artifactId>jclouds-cli-pom</artifactId>
         <groupId>org.jclouds.cli</groupId>
-        <version>1.5.0-beta.6</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jclouds.cli</groupId>
     <artifactId>runner</artifactId>
-    <version>1.5.0-beta.6</version>
+    <version>1.5.0-SNAPSHOT</version>
     <name>jclouds :: cli :: runner</name>
 
     <dependencies>
