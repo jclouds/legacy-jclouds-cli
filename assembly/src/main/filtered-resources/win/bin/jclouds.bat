@@ -91,12 +91,12 @@ if [%1]==[] (
         echo "Actions: list, create, destroy, runscript"
         echo ""
         echo "Options:"
-        echo "--proivder:\t\t The id of the provider."
-        echo "--api:\t\t The id of the api."
-        echo "--endpoint:\t\t The endpoint."
-        echo "--identity:\t\t The identity."
-        echo "--credential:\t\t The credential."
-goto END
+        echo "--proivder:       The id of the provider."
+        echo "--api:            The id of the api."
+        echo "--endpoint:       The endpoint."
+        echo "--identity:       The identity."
+        echo "--credential:     The credential."
+        goto END
 )
 
 if [%2]==[] (
@@ -106,11 +106,12 @@ if [%2]==[] (
         echo "Actions: list, create, destroy, runscript"
         echo ""
         echo "Options:"
-        echo "--proivder:\t\t The id of the provider."
-        echo "--api:\t\t The id of the api."
-        echo "--endpoint:\t\t The endpoint."
-        echo "--identity:\t\t The identity."
-        echo "--credential:\t\t The credential."goto END
+        echo "--proivder:       The id of the provider."
+        echo "--api:            The id of the api."
+        echo "--endpoint:       The endpoint."
+        echo "--identity:       The identity."
+        echo "--credential:     The credential."
+        goto END
 )
 
 set CATEGORY=%1
