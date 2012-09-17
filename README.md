@@ -54,59 +54,56 @@ All commands support the following options that you can use: --provider (use thi
 
 For example, in a fresh installation you can simple:
 
-<pre>
-jclouds:node-list --provider [my provider or api] --identity [my identity] --credential [my credential] --endpoint [my endpoint]
-</pre>
+
+    jclouds:node-list --provider [my provider or api] --identity [my identity] --credential [my credential] --endpoint [my endpoint]
+
 
 If you want to avoid passing the same options all the time, you can configure the provider or the api once and reuse it. To configure the provider or the api:
 
 For compute providers & apis:
 
-<pre>
-jclouds:compute-service-create --provider [provider] --identity [identity] --credential [credential]
-</pre>
+    jclouds:compute-service-create --provider [provider] --identity [identity] --credential [credential]
 
-<pre>
-jclouds:compute-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
-</pre>
+
+    jclouds:compute-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
+
 
 For blobstore providers or apis:
 
-<pre>
-jclouds:blobstore-service-create --provider [provider] --identity [identity] --credential [credential]
-</pre>
 
-<pre>
-jclouds:blobstore-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
-</pre>
+    jclouds:blobstore-service-create --provider [provider] --identity [identity] --credential [credential]
+
+
+    jclouds:blobstore-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
+
 
 To list the available compute or blobstore services:
 
-<pre>
-jclouds:compute-service-list **(for compute providers and apis)**
-jclouds:blobstore-service-list **(for blobstore providers and apis)**
-</pre>
+
+    jclouds:compute-service-list (for compute providers and apis)
+    jclouds:blobstore-service-list (for blobstore providers and apis)
+
 
 You can also remove one of the services:
 
-<pre>
-jclouds:compute-service-destroy --provider [provider]
-jclouds:blobstore-service-destroy --provider [provider]
-</pre>
+
+    jclouds:compute-service-destroy --provider [provider]
+    jclouds:blobstore-service-destroy --provider [provider]
+
 
 **Installing additional providers and api**
 The interactive version of the cli will have out of the box installed support for the mainstream providers and apis. To enable the any other provider or api, you will need to enable it.
 This is done using the features commands.
 
 List the available jclouds modules:
-<pre>
-features:list
-</pre>
+
+    features:list
+
 
 To install an additional api *(say cloudstack)*
-<pre>
-features:install jclouds-api-cloudstack
-</pre>
+
+    features:install jclouds-api-cloudstack
+
 
 
 Leveraging environmental variables
@@ -126,6 +123,65 @@ Supported variables:
 * **JCLOUDS_BLOBSTORE_ENDPOINT**
 * **JCLOUDS_BLOBSTORE_IDENTITY**
 * **JCLOUDS_BLOBSTORE_CREDENTIAL**
+
+Configuring command output
+--------------------------
+As of jclouds-cli version 1.5.0 commands support output customization. The customization features are:
+
+* **Width calculation** The commands calculate the required column width and adjust the format accordingly.
+* **Configurable columns** Can add remove columns using configuration.
+* **Groovy value retrieval** The display content is configurable using groovy expressions.
+* **Configurable column alignment** You can configure for each column left or right alignment.
+* **Configurable sorting options** Configure ordering by column using ascending or descending order.
+
+The configuration for all columns can be found inside the org.jclouds.shell pid. Each configuration key is prefixed using the command category (node, image, location, hardware etc).
+The suffix defines the configuration topic. For example hardware.headers defines the headers to be displayed by the hardware commands.
+In the following commands the hardware category will be used as example.
+
+**Defining the command headers**
+To specify the headers of a command we need to place to specify the headers configuration as a semicoln separated list.
+For hardware:
+
+
+    hardware.headers=[id];[ram];[cpu];[cores]
+
+
+**Defining the display data**
+Display data are configured as a comma separated list of expressions (using the scripting engine of your choice, default is groovy). The expressions will be evaluated on the object of interest (in our example the hardware object).
+To display the id field of the hardware object the expression to use is hardware.id. The reason for choosing groovy (as a default) for retrieving the data and not a simple expression language is that groovy is powerfull and can be used for more complex expressions.
+For example the Hardware object contains a collection of Processors and each processor has a filed of cores. To display the sum of cores among processors, we can use the following expression: hardware.processors.sum{it.cores}.
+
+You can change the scripting engine:
+
+    hardware.engine=groovy
+
+Please note that if you don't specify the engine, then groovy will be assumed.
+
+To specify the display data, now all you need to do is to provide the expressions:
+
+    hardware.expressions=hardware.id;hardware.ram;hardware.processors.sum{it.cores*it.speed};hardware.processors.sum{it.cores}
+
+The configuration above will display the hardware id in the first column, the hardware ram in the second column, the sum of cores X speed per processor in the third column and finally the sum of cores for all processors in the last column.
+
+**Defining the sort order**
+To specify the sort column, the sortBy option can be used to point to the header of the column of interest.
+For example hardware hardware.shortby=[cpu].
+
+**Changing the delimeter**
+Most of the configuration options for the shell table are passed as delimited strings. What happens when you want to change the delimiter?
+By default the delimeter is the semicoln symbol, but for each command category you can specify the delimiter. For example:
+
+
+    hardware.delimeter=,
+    hardware.headers=[id],[ram],[cpu],[cores]
+
+
+
+See also
+--------
+https://github.com/jclouds/jclouds/
+https://github.com/jclouds/jclouds-karaf/
+
 
 
 
