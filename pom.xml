@@ -148,17 +148,6 @@
     </build>
 
     <repositories>
-      <repository>
-            <id>jclouds-staging</id>
-            <url>https://oss.sonatype.org/content/repositories/orgjclouds-354</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>
