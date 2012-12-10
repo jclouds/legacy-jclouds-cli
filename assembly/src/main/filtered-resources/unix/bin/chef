@@ -1,0 +1,91 @@
+#!/bin/bash
+#
+#    Licensed to the Apache Software Foundation (ASF) under one or more
+#    contributor license agreements.  See the NOTICE file distributed with
+#    this work for additional information regarding copyright ownership.
+#    The ASF licenses this file to You under the Apache License, Version 2.0
+#    (the "License"); you may not use this file except in compliance with
+#    the License.  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+#
+
+DIRNAME=`dirname "$0"`
+PROGNAME=`basename "$0"`
+CATEGORY=`basename "$1"`
+ACTION=`basename "$2"`
+
+locateHome() {
+    if [ "x$KARAF_HOME" != "x" ]; then
+        warn "Ignoring predefined value for KARAF_HOME"
+    fi
+
+    # In POSIX shells, CDPATH may cause cd to write to stdout
+    (unset CDPATH) >/dev/null 2>&1 && unset CDPATH
+
+    KARAF_HOME=`cd $DIRNAME/..; pwd`
+    if [ ! -d "$KARAF_HOME" ]; then
+        die "KARAF_HOME is not valid: $KARAF_HOME"
+    fi
+}
+
+validateArguments() {
+    if [ "x$CATEGORY" == "x" ]; then
+        echo "Usage:chef {category} {action} {options/arguments}."
+        echo ""
+        echo "Categories: cookbook node group"
+        echo "Actions: list, bootstrap"
+        echo ""
+        echo "Options:"
+        echo -e "--api:\t\t\t\t The id of the api."
+        echo -e "--client-name:\t\t\t The name of the client."
+        echo -e "--client-key-file:\t\t The path to the client key file."
+        echo -e "--validator-name:\t\t The name of the validator."
+        echo -e "--validator-key-file:\t The path to the validator key file."
+        echo -e "--endpoint:\t\t\t\t The endpoint."
+
+        exit -1
+    fi
+    if [ "x$ACTION" == "x" ]; then
+        echo "Usage:chef {category} {action} {options/arguments}."
+        echo ""
+        echo "Categories: cookbook node group"
+        echo "Actions: list, bootstrap"
+        echo ""
+        echo "Options:"
+        echo -e "--api:\t\t\t\t The id of the api."
+        echo -e "--client-name:\t\t\t The name of the client."
+        echo -e "--client-key-file:\t\t The path to the client key file."
+        echo -e "--validator-name:\t\t The name of the validator."
+        echo -e "--validator-key-file:\t The path to the validator key file."
+        echo -e "--endpoint:\t\t\t\t The endpoint."
+        exit -1
+        fi
+}
+warn() {
+    echo "${PROGNAME}: $*"
+}
+
+die() {
+    warn "$*"
+    exit 1
+}
+
+run() {
+    CMD="$KARAF_HOME/bin/shell chef:$CATEGORY-$ACTION ${@:3}"
+    exec $CMD
+}
+
+main() {
+    validateArguments
+    locateHome
+    run "$@"
+}
+
+main "$@"
