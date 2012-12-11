@@ -1,10 +1,16 @@
 jclouds-cli
 ===========
+jclouds-cli is tool that allows you to interact with [jclouds](https://github.com/jclouds/jclouds) Compute, Blobstore and Chef services.
+It is easy to use, configurable, extensible and it comes into 2 flavors:
 
-Jclouds CLI provides two types of command line interface:
+* **An interactive shell**.
+    * *Rich completion for commands, options and arguments*
+    * *Reusability of services*
+    * *Modularity and Extensibility*
+* **A shell script**.
+    * *Easily used from other scripts*.
 
-* An interactive shell.
-* A shell script.
+Both flavors support reading configuration from environmental variables, so that you don't have to reapeat the same options again and again.
 
 Installation
 -----------
@@ -15,114 +21,306 @@ Using the CLI
 You can use the jclouds cli to perform misc operations, such as creating a node, run scripts on a node, list nodes, destroy a node etc.
 The cli also supports blobstore, so you can create, delete or access a blobstore.
 
-To use the cli:
-./bin/jclouds **[category]** **[action]** **[options]** **[arguments]**.
+**Compute Service Usage**:
+
+    ./bin/jclouds **[category]** **[action]** **[options]** **[arguments]**.
 
 * *Categories*: node, group, image, location, hardware.
 * *Actions*: list, create, destroy, runscript.
-* *Options*: --provider --api, --identity, --credential --endpoint etc.
+* *Options*: --provider --api, --identity, --credential, --endpoint etc.
 
-Some examples:
+
+**Compute Serivce Examples**:
 To create 10 nodes on EC2 under group: myGroupName using Ubuntu 10.04
-<pre>
-./jclouds node create --provider aws-ec2 --identity [identity] --credential [credential] --os-family ubuntu --os-version 10.04 --adminAcess myGroupName 10
-</pre>
+
+    ./jclouds node create --provider aws-ec2 --identity [identity] --credential [credential] --os-family ubuntu --os-version 10.04 --adminAcess myGroupName 10
+
 
 To list all nodes:
-<pre>
-./jclouds node list --provider aws-ec2 --identity [identity] --credential [credential]
-</pre>
+
+    ./jclouds node list --provider aws-ec2 --identity [identity] --credential [credential]
+
 
 To destroy a node:
-<pre>
-./jclouds node destroy [node id]
-</pre>
+
+    ./jclouds node destroy [node id]
+
+
+**Blobstore Usage**:
+
+    ./bin/jclouds **[category]** **[action]** **[options]** **[arguments]**.
+
+* *Categories*: blobstore,
+* *Actions*: list, create, destroy, read, write
+* *Options*: --provider --api, --identity, --credential, --endpoint etc.
+
+
+**Blobstore Examples**:
+To create a container on S3:
+
+    ./jclouds blobstore create --provider aws-s3 --identity [identity] --credential [credential] mycontainer
+
+To list the content of container:
+
+    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] mycontainer
+
+
+To copy a file to a blob:
+
+    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] mycontainer myblob /path/to/file
+
+To copy using a url to a blob:
+
+    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] mycontainer myblob myurl
+
+To write a string value to a blob:
+
+    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] --string-payload mycontainer myblob myvalue
+
 
 APIs work in the same manner as providers, but you will also need to specify the endpoint.
+**Chef Usage:**:
+
+    ./bin/chef **[category]** **[action]** **[options]** **[arguments]**.
+
+* *Categories*: cookbook, node group.
+* *Actions*: list, bootstrap.
+* *Options*: --api, --client-name, --client-key-file, --validator-name, --validator-key-file, --endpoint etc.
+
+**Chef Examples:**:
+
+To list all cookbooks:
+
+    ./bin/chef cookbook list --client-name [client name] --client-key-file [path to client key file] --endpoint [endpoint]
+
+To bootstrap an existing compute node:
+
+    ./bin/chef node bootstrap --provider aws-ec2 --identity [identity] --credential [credential] --client-name [client name] --client-key-file [path to client key file] --endpoint [endpoint] [node id] [recipe]
+
+To bootstrap an existing compute group:
+
+    ./bin/chef group bootstrap --provider aws-ec2 --identity [identity] --credential [credential] --client-name [client name] --client-key-file [path to client key file] --endpoint [endpoint] [group id] [recipe]
+
+To create a new compute node and apply a recipe:
+
+    ./jclouds node create --provider aws-ec2 --identity [identity] --credential [credential] --recipe chef/myrecipe [node group]
+
 
 Using the interactive shell
 ---------------------------
 To start the interactive shell:
 ./bin/jclouds-cli
 
-The are two ways of configuring a provider or api, when using the interactive mode:
-
-* **As command options**
-* **As a Service**
-
-All commands support the following options that you can use: --provider (use this for apis too), --identity, --credential --endpoint.
-
-For example, in a fresh installation you can simple:
-
-
-    jclouds:node-list --provider [my provider or api] --identity [my identity] --credential [my credential] --endpoint [my endpoint]
-
-
-If you want to avoid passing the same options all the time, you can configure the provider or the api once and reuse it. To configure the provider or the api:
-
-For compute providers & apis:
-
-    jclouds:compute-service-create --provider [provider] --identity [identity] --credential [credential]
-
-
-    jclouds:compute-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
-
-
-For blobstore providers or apis:
-
-
-    jclouds:blobstore-service-create --provider [provider] --identity [identity] --credential [credential]
-
-
-    jclouds:blobstore-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint]
-
-
-To list the available compute or blobstore services:
-
-
-    jclouds:compute-service-list (for compute providers and apis)
-    jclouds:blobstore-service-list (for blobstore providers and apis)
-
-
-You can also remove one of the services:
-
-
-    jclouds:compute-service-destroy --provider [provider]
-    jclouds:blobstore-service-destroy --provider [provider]
-
-
-**Installing additional providers and api**
-The interactive version of the cli will have out of the box installed support for the mainstream providers and apis. To enable the any other provider or api, you will need to enable it.
-This is done using the features commands.
-
-List the available jclouds modules:
+The interactive shell is a lightweight container powered by [Apache Karaf](http://karaf.apache.org) which is modular and extensible.
+Out of the box it has installed support of Amazon EC2, Amazon S3 and Chef. But you can easily add or remove providers, apis, drivers etc using the features commands:
 
     features:list
 
-
-To install an additional api *(say cloudstack)*
+Will list all the availalbe features, that you can install. Some examples of adding additional features:
 
     features:install jclouds-api-cloudstack
+    features:install jclouds-api-openstack-nova
 
+
+All commands that are available from the script are also availble in the interactive mode. The only difference is that in the interactive mode the **category** and **action** are encoded in the command name.
+So all jclouds and chef commands follow the following format:
+
+    scope:category-action [options] [arguments]
+
+For example:
+
+    jclouds:node-list --provider aws-ec2 --identity [identity] --credential [credential]
+    jclouds:blobstore-list --provider aws-s3 --identity [identity] --credential [credential]
+    chef:cookbook-list --client-name [client name] --client-key-file [path to client key file] --endpoint [endpoint]
+
+
+One of the advantages of using the interactive shell is that it provides the ability to reuse services, and avoid the options boilerplate.
+
+**Creating a reusable Compute Service**
+
+    jclouds:compute-service-create --provider [provider] --identity [identity] --credential [credential] --name [service name]
+    jclouds:compute-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint] --name [service name]
+
+If no name option specified the provider or api will be used instead.
+To list the available compute services:
+
+    jclouds:compute-service-list
+
+Here's an example output that list 2 services registered for the aws-ec2 provider. The service are named myec2 and yaec2:
+
+    Compute APIs:
+    -------------
+    [id]                     [type]       [service]
+    ec2                      compute      [ ]
+    stub                     compute      [ ]
+
+
+    Compute Providers:
+    ------------------
+    [id]                     [type]       [service]
+    aws-ec2                  compute      [ myec2 yaec2 ]
+
+
+Then you can reuse the service from the other commands with the following way:
+
+    jclouds:node-list --name [service name]
+    jclouds:node-create --name [service name]
+
+Note that if there is only a single compute service availble then the --name is optional. The same applies if there is a single service per api or provider. You can just specify the provider or the api and the shell will pick up the right service for you.
+Recreating a service with the same name, will replace the the service. Finally you can destroy a service using the following command:
+
+    jclouds:compute-service-destroy [serice name]
+
+**Reusing Compute Serivces Examples**:
+To create 10 nodes on EC2 under group: myGroupName using Ubuntu 10.04 and reusing myec2 service:
+
+    jclouds:node-create --name myec2 --os-version 10.04 --adminAcess myGroupName 10
+
+
+To list all nodes:
+
+    jclouds:node-list --name myec2
+
+
+To destroy a node:
+
+    jclouds:node-destroy --name myec2
+
+
+**Creating a reusable BlobStore Service**
+
+    jclouds:blobstore-service-create --provider [provider] --identity [identity] --credential [credential] --name [service name]
+    jclouds:blobstore-service-create --api [api] --identity [identity] --credential [credential] --endpoint [endpoint] --name [service name]
+
+If no name option specified the provider or api will be used instead.
+To list the available blobstore services:
+
+    jclouds:blobstore-service-list
+
+Here's an example output that list 2 services registered for the aws-s3 provider. The service are named mys3 and yas3:
+
+    BlobStore APIs:
+    -------------
+    [id]                     [type]       [service]
+    s3                       blobstore    [ ]
+    transient                blobstore    [ ]
+
+
+    BlobStore Providers:
+    ------------------
+    [id]                     [type]       [service]
+    aws-ec2                  blobstore    [mys3 yas3]
+
+
+Then you can reuse the service from the other commands with the following way:
+
+    jclouds:blobstore-list --name [service name]
+    jclouds:blobstore-write --name [service name]
+
+Note that if there is only a single blobstore service availble then the --name is optional. The same applies if there is a single service per api or provider. You can just specify the provider or the api and the shell will pick up the right service for you.
+Recreating a service with the same name, will replace the the service. Finally you can destroy a service using the following command:
+
+    jclouds:blobstore-service-destroy [serice name]
+
+**Reusing BlobStore Serivces Examples**:
+To create a container on S3 using service mys3:
+
+    jclouds:blobstore-create --name mys3 mycontainer
+
+To list the content of container:
+
+    jclouds:blobstore-list --name mys3 mycontainer
+
+
+To copy a file to a blob:
+
+    jclouds:blobstore list ---name mys3 mycontainer myblob /path/to/file
+
+To copy using a url to a blob:
+
+    jclouds:blobstore-list --name mys3 mycontainer myblob myurl
+
+To write a string value to a blob:
+
+    jclouds:blobstore-list --name mys3 --string-payload mycontainer myblob myvalue
+
+**Creating a reusable Chef Service**
+
+    chef:service-create --api [api] --client-name [client name] --client-key-file [path to client key file] --endpoint [endpoint]
+
+If no name option specified api will be used which defaults to "chef"..
+To list the available chef services:
+
+    chef:chef-service-list
+
+Here's an example output that list 2 services registered for the aws-s3 provider. The service are named mys3 and yas3:
+
+    Chef APIs:
+    -------------
+    [id]                     [type]       [service]
+    chef                     chef         [mychef yachef]
+    transient                chef         [ ]
+
+
+Then you can reuse the service from the other commands with the following way:
+
+    chef:cookbook-list --name [service name]
+
+Note: In most cases, you'll only need a single service from the chef api, so it's usually pretty safe to skip --api or --name option.
+
+    chef:service-destroy [serice name]
+
+**Reusing Chef Serivces Examples**:
+To list all cookbooks for the chef service named mychef:
+
+    chef:cookbook-list --name mychef
+
+To bootstrap an existing compute node that is managed by myec2 compute service *(here we are reusing 2 services in a single command)*:
+
+    chef:node-bootstrap --name myec2 --chef-name mychef my-node-id java::openjdk
+
+The same for an entire group:
+
+    chef:node-bootstrap --name myec2 --chef-name mychef my-group java::openjdk
+
+To create a new compute node and apply a recipe:
+
+    jclouds:node-create --name mycec2 --recipe mychef/myrecipe mygroup
 
 
 Leveraging environmental variables
 -----------------------------------
 Both in the interactive shell and cli modes, you may find repeating the provider information again and again not really friendly.
-You can completely skip those options by sepcifying them as environmental variables.
+You can completely skip those options by specifying them as environmental variables.
 
-Supported variables:
-* **JCLOUDS_COMPUTE_PROVIDER**
-* **JCLOUDS_COMPUTE_API**
-* **JCLOUDS_COMPUTE_ENDPOINT**
-* **JCLOUDS_COMPUTE_IDENTITY**
-* **JCLOUDS_COMPUTE_CREDENTIAL**
+For Compute Services:
 
-* **JCLOUDS_BLOBSTORE_PROVIDER**
-* **JCLOUDS_BLOBSTORE_API**
-* **JCLOUDS_BLOBSTORE_ENDPOINT**
-* **JCLOUDS_BLOBSTORE_IDENTITY**
-* **JCLOUDS_BLOBSTORE_CREDENTIAL**
+* **JCLOUDS_COMPUTE_PROVIDER** The name of the compute provider.
+* **JCLOUDS_COMPUTE_API** The name of the compute api.
+* **JCLOUDS_COMPUTE_IDENTITY** The identiy for accessing the compute provider.
+* **JCLOUDS_COMPUTE_CREDENTIAL** The credential for accessing the compute provider.
+* **JCLOUDS_COMPUTE_ENDPOINT** The endpoint (This is usally needed when using compute apis).
+* **JCLOUDS_USER** The username of that will be used for accessing compute instances.
+* **JCLOUDS_PASSWORD** The password that will be used for accessing compute instances.
+
+For Blob Stores:
+
+* **JCLOUDS_BLOBSTORE_PROVIDER** The name of the blobstore provider.
+* **JCLOUDS_BLOBSTORE_API** The name of the blobstore api.
+* **JCLOUDS_BLOBSTORE_IDENTITY** The identiy for accessing the blobstore provider.
+* **JCLOUDS_BLOBSTORE_CREDENTIAL** The credential for accessing the blobstore provider.
+* **JCLOUDS_BLOBSTORE_ENDPOINT** The endpoint (This is usally needed when using blobstore apis).
+
+For Chef:
+
+* **JCLOUDS_CHEF_API** The name of the blobstore api.
+* **JCLOUDS_CHEF_CLIENT_NAME** The client name.
+* **JCLOUDS_CHEF_CLIENT_CREDENTIAL** The client credential.
+* **JCLOUDS_CHEF_CLIENT_KEY_FILE** The path of the client key file (can be used instead of the above).
+* **JCLOUDS_CHEF_VALIDATOR_NAME** The validator name.
+* **JCLOUDS_CHEF_VALIDATOR_CREDENTIAL** The validator credential.
+* **JCLOUDS_CHEF_VALIDATOR_KEY_FILE** The path of the validator key file (can be used instead of the above).
+* **JCLOUDS_CHEF_ENDPOINT** The endpoint (This is usally needed when using chef apis).
 
 Configuring command output
 --------------------------
@@ -181,6 +379,7 @@ See also
 --------
 https://github.com/jclouds/jclouds/
 https://github.com/jclouds/jclouds-karaf/
+https://github.com/jclouds/jclouds-chef/
 
 
 
