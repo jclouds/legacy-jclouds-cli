@@ -10,7 +10,7 @@ It is easy to use, configurable, extensible and it comes into 2 flavors:
 * **A shell script**.
     * *Easily used from other scripts*.
 
-Both flavors support reading configuration from environmental variables, so that you don't have to reapeat the same options again and again.
+Both flavors support reading configuration from environmental variables, so that you don't have to repeat the same options again and again.
 
 Installation
 -----------
@@ -30,10 +30,10 @@ The cli also supports blobstore, so you can create, delete or access a blobstore
 * *Options*: --provider --api, --identity, --credential, --endpoint etc.
 
 
-**Compute Serivce Examples**:
+**Compute Service Examples**:
 To create 10 nodes on EC2 under group: myGroupName using Ubuntu 10.04
 
-    ./jclouds node create --provider aws-ec2 --identity [identity] --credential [credential] --os-family ubuntu --os-version 10.04 --adminAcess myGroupName 10
+    ./jclouds node create --provider aws-ec2 --identity [identity] --credential [credential] --os-family ubuntu --os-version 10.04 --adminAccess myGroupName 10
 
 
 To list all nodes:
@@ -116,13 +116,13 @@ Out of the box it has installed support of Amazon EC2, Amazon S3 and Chef. But y
 
     features:list
 
-Will list all the availalbe features, that you can install. Some examples of adding additional features:
+Will list all the available features, that you can install. Some examples of adding additional features:
 
     features:install jclouds-api-cloudstack
     features:install jclouds-api-openstack-nova
 
 
-All commands that are available from the script are also availble in the interactive mode. The only difference is that in the interactive mode the **category** and **action** are encoded in the command name.
+All commands that are available from the script are also available in the interactive mode. The only difference is that in the interactive mode the **category** and **action** are encoded in the command name.
 So all jclouds and chef commands follow the following format:
 
     scope:category-action [options] [arguments]
@@ -166,15 +166,15 @@ Then you can reuse the service from the other commands with the following way:
     jclouds:node-list --name [service name]
     jclouds:node-create --name [service name]
 
-Note that if there is only a single compute service availble then the --name is optional. The same applies if there is a single service per api or provider. You can just specify the provider or the api and the shell will pick up the right service for you.
+Note that if there is only a single compute service available then the --name is optional. The same applies if there is a single service per api or provider. You can just specify the provider or the api and the shell will pick up the right service for you.
 Recreating a service with the same name, will replace the the service. Finally you can destroy a service using the following command:
 
     jclouds:compute-service-destroy [serice name]
 
-**Reusing Compute Serivces Examples**:
+**Reusing Compute Services Examples**:
 To create 10 nodes on EC2 under group: myGroupName using Ubuntu 10.04 and reusing myec2 service:
 
-    jclouds:node-create --name myec2 --os-version 10.04 --adminAcess myGroupName 10
+    jclouds:node-create --name myec2 --os-version 10.04 --adminAccess myGroupName 10
 
 
 To list all nodes:
@@ -217,12 +217,12 @@ Then you can reuse the service from the other commands with the following way:
     jclouds:blobstore-list --name [service name]
     jclouds:blobstore-write --name [service name]
 
-Note that if there is only a single blobstore service availble then the --name is optional. The same applies if there is a single service per api or provider. You can just specify the provider or the api and the shell will pick up the right service for you.
+Note that if there is only a single blobstore service available then the --name is optional. The same applies if there is a single service per api or provider. You can just specify the provider or the api and the shell will pick up the right service for you.
 Recreating a service with the same name, will replace the the service. Finally you can destroy a service using the following command:
 
     jclouds:blobstore-service-destroy [serice name]
 
-**Reusing BlobStore Serivces Examples**:
+**Reusing BlobStore Services Examples**:
 To create a container on S3 using service mys3:
 
     jclouds:blobstore-create --name mys3 mycontainer
@@ -270,7 +270,7 @@ Note: In most cases, you'll only need a single service from the chef api, so it'
 
     chef:service-destroy [serice name]
 
-**Reusing Chef Serivces Examples**:
+**Reusing Chef Services Examples**:
 To list all cookbooks for the chef service named mychef:
 
     chef:cookbook-list --name mychef
@@ -285,7 +285,7 @@ The same for an entire group:
 
 To create a new compute node and apply a recipe:
 
-    jclouds:node-create --name mycec2 --recipe mychef/myrecipe mygroup
+    jclouds:node-create --name mlycec2 --recipe mychef/myrecipe mygroup
 
 
 Leveraging environmental variables
@@ -297,9 +297,9 @@ For Compute Services:
 
 * **JCLOUDS_COMPUTE_PROVIDER** The name of the compute provider.
 * **JCLOUDS_COMPUTE_API** The name of the compute api.
-* **JCLOUDS_COMPUTE_IDENTITY** The identiy for accessing the compute provider.
+* **JCLOUDS_COMPUTE_IDENTITY** The identity for accessing the compute provider.
 * **JCLOUDS_COMPUTE_CREDENTIAL** The credential for accessing the compute provider.
-* **JCLOUDS_COMPUTE_ENDPOINT** The endpoint (This is usally needed when using compute apis).
+* **JCLOUDS_COMPUTE_ENDPOINT** The endpoint (This is usually needed when using compute apis).
 * **JCLOUDS_USER** The username of that will be used for accessing compute instances.
 * **JCLOUDS_PASSWORD** The password that will be used for accessing compute instances.
 
@@ -307,9 +307,9 @@ For Blob Stores:
 
 * **JCLOUDS_BLOBSTORE_PROVIDER** The name of the blobstore provider.
 * **JCLOUDS_BLOBSTORE_API** The name of the blobstore api.
-* **JCLOUDS_BLOBSTORE_IDENTITY** The identiy for accessing the blobstore provider.
+* **JCLOUDS_BLOBSTORE_IDENTITY** The identity for accessing the blobstore provider.
 * **JCLOUDS_BLOBSTORE_CREDENTIAL** The credential for accessing the blobstore provider.
-* **JCLOUDS_BLOBSTORE_ENDPOINT** The endpoint (This is usally needed when using blobstore apis).
+* **JCLOUDS_BLOBSTORE_ENDPOINT** The endpoint (This is usually needed when using blobstore apis).
 
 For Chef:
 
@@ -320,7 +320,7 @@ For Chef:
 * **JCLOUDS_CHEF_VALIDATOR_NAME** The validator name.
 * **JCLOUDS_CHEF_VALIDATOR_CREDENTIAL** The validator credential.
 * **JCLOUDS_CHEF_VALIDATOR_KEY_FILE** The path of the validator key file (can be used instead of the above).
-* **JCLOUDS_CHEF_ENDPOINT** The endpoint (This is usally needed when using chef apis).
+* **JCLOUDS_CHEF_ENDPOINT** The endpoint (This is usually needed when using chef apis).
 
 Configuring command output
 --------------------------
@@ -337,7 +337,7 @@ The suffix defines the configuration topic. For example hardware.headers defines
 In the following commands the hardware category will be used as example.
 
 **Defining the command headers**
-To specify the headers of a command we need to place to specify the headers configuration as a semicoln separated list.
+To specify the headers of a command we need to place to specify the headers configuration as a semicolon separated list.
 For hardware:
 
 
@@ -346,7 +346,7 @@ For hardware:
 
 **Defining the display data**
 Display data are configured as a comma separated list of expressions (using the scripting engine of your choice, default is groovy). The expressions will be evaluated on the object of interest (in our example the hardware object).
-To display the id field of the hardware object the expression to use is hardware.id. The reason for choosing groovy (as a default) for retrieving the data and not a simple expression language is that groovy is powerfull and can be used for more complex expressions.
+To display the id field of the hardware object the expression to use is hardware.id. The reason for choosing groovy (as a default) for retrieving the data and not a simple expression language is that groovy is powerful and can be used for more complex expressions.
 For example the Hardware object contains a collection of Processors and each processor has a filed of cores. To display the sum of cores among processors, we can use the following expression: hardware.processors.sum{it.cores}.
 
 You can change the scripting engine:
@@ -363,14 +363,14 @@ The configuration above will display the hardware id in the first column, the ha
 
 **Defining the sort order**
 To specify the sort column, the sortBy option can be used to point to the header of the column of interest.
-For example hardware hardware.shortby=[cpu].
+For example hardware hardware.sortby=[cpu].
 
-**Changing the delimeter**
+**Changing the delimiter**
 Most of the configuration options for the shell table are passed as delimited strings. What happens when you want to change the delimiter?
-By default the delimeter is the semicoln symbol, but for each command category you can specify the delimiter. For example:
+By default the delimiter is the semicolon symbol, but for each command category you can specify the delimiter. For example:
 
 
-    hardware.delimeter=,
+    hardware.delimiter=,
     hardware.headers=[id],[ram],[cpu],[cores]
 
 
