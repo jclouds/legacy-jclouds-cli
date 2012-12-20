@@ -269,6 +269,14 @@
                                          dir="target/dependencies/unix/apache-karaf-${karaf.version}/bin">
                                     <include name="*"/>
                                 </replace>
+                                <replaceregexp file="target/dependencies/unix/apache-karaf-${karaf.version}/etc/config.properties"
+                                               match="karaf.framework.equinox=*"
+                                               replace="#"
+                                               byline="true"/>
+                                <replaceregexp file="target/dependencies/win/apache-karaf-${karaf.version}/etc/config.properties"
+                                               match="karaf.framework.equinox=*"
+                                               replace="#"
+                                               byline="true"/>
                             </tasks>
                         </configuration>
                         <goals>
