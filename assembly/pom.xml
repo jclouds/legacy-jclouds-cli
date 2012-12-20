@@ -15,7 +15,8 @@
   ~  limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>jclouds-cli-pom</artifactId>
         <groupId>org.jclouds.cli</groupId>
@@ -124,6 +125,7 @@
                                     <groupId>org.apache.karaf</groupId>
                                     <artifactId>apache-karaf</artifactId>
                                     <version>${karaf.version}</version>
+                                    <classifier>minimal</classifier>
                                     <type>tar.gz</type>
                                     <outputDirectory>target/dependencies/unix</outputDirectory>
                                 </artifactItem>
@@ -142,6 +144,7 @@
                                     <groupId>org.apache.karaf</groupId>
                                     <artifactId>apache-karaf</artifactId>
                                     <version>${karaf.version}</version>
+                                    <classifier>minimal</classifier>
                                     <type>zip</type>
                                     <outputDirectory>target/dependencies/win</outputDirectory>
                                 </artifactItem>
@@ -170,16 +173,82 @@
                                     mvn:org.jclouds.karaf/jclouds-karaf/${jclouds.karaf.version}/xml/features
                                 </descriptor>
                             </descriptors>
-                            <!--features>
+                            <features>
                                 <feature>config</feature>
-                                <feature>jclouds-commands</feature>
+                                <feature>jclouds-guice</feature>
+                                <feature>jclouds</feature>
+                                <feature>jclouds-compute</feature>
+                                <feature>jclouds-nodepool</feature>
+                                <feature>jclouds-api-filesystem</feature>
+                                <feature>jclouds-api-eucalyptus</feature>
+                                <feature>jclouds-api-elasticstack</feature>
+                                <feature>jclouds-api-vcloud</feature>
+                                <feature>jclouds-api-byon</feature>
+                                <feature>jclouds-api-swift</feature>
+                                <feature>jclouds-api-nova</feature>
+                                <feature>jclouds-api-openstack-nova</feature>
+                                <feature>jclouds-api-openstack-cinder</feature>
+                                <feature>jclouds-api-s3</feature>
+                                <feature>jclouds-api-ec2</feature>
+                                <feature>jclouds-api-cloudstack</feature>
+                                <feature>jclouds-api-rackspace-cloudidentity</feature>
+                                <feature>jclouds-api-chef</feature>
+                                <feature>jclouds-driver-jsch</feature>
+                                <feature>jclouds-driver-sshj</feature>
+                                <feature>jclouds-driver-slf4j</feature>
+                                <feature>jclouds-driver-log4j</feature>
+                                <feature>jclouds-driver-bouncycastle</feature>
+                                <feature>jclouds-aws-cloudwatch</feature>
                                 <feature>jclouds-aws-ec2</feature>
                                 <feature>jclouds-aws-s3</feature>
-                                <feature>jclouds-cloudserver-us</feature>
-                                <feature>jclouds-cloudserver-uk</feature>
-                                <feature>jclouds-cloudfiles-us</feature>
+                                <feature>jclouds-azureblob</feature>
+                                <feature>jclouds-bluelock-vcloud-zone01</feature>
                                 <feature>jclouds-cloudfiles-uk</feature>
-                            </features-->
+                                <feature>jclouds-cloudfiles-us</feature>
+                                <feature>jclouds-rackspace-cloudloadbalancers-us</feature>
+                                <feature>jclouds-rackspace-cloudloadbalancers-uk</feature>
+                                <feature>jclouds-cloudonestorage</feature>
+                                <feature>jclouds-cloudserver-uk</feature>
+                                <feature>jclouds-cloudserver-us</feature>
+                                <feature>jclouds-rackspace-cloudservers-us</feature>
+                                <feature>jclouds-rackspace-cloudservers-uk</feature>
+                                <feature>jclouds-cloudsigma-zrh</feature>
+                                <feature>jclouds-cloudsigma-lvs</feature>
+                                <feature>jclouds-elastichosts-lon-b</feature>
+                                <feature>jclouds-elastichosts-lon-p</feature>
+                                <feature>jclouds-elastichosts-sat-p</feature>
+                                <feature>jclouds-elastichosts-lax-p</feature>
+                                <feature>jclouds-elastichosts-tor-p</feature>
+                                <feature>jclouds-eucalyptus-s3</feature>
+                                <feature>jclouds-eucalyptus-ec2</feature>
+                                <feature>jclouds-gogrid</feature>
+                                <feature>jclouds-go2cloud-jhb1</feature>
+                                <feature>jclouds-greenhousedata-element-vcloud</feature>
+                                <feature>jclouds-hpcloud-objectstorage</feature>
+                                <feature>jclouds-hpcloud-compute</feature>
+                                <feature>jclouds-trystack-nova</feature>
+                                <feature>jclouds-ninefold-storage</feature>
+                                <feature>jclouds-ninefold-compute</feature>
+                                <feature>jclouds-openhosting-east1</feature>
+                                <feature>jclouds-rimuhosting</feature>
+                                <feature>jclouds-serverlove-z1-man</feature>
+                                <feature>jclouds-skalicloud-sdg-my</feature>
+                                <feature>jclouds-softlayer</feature>
+                                <feature>jclouds-slicehost</feature>
+                                <feature>jclouds-synaptic-storage</feature>
+                                <feature>jclouds-stratogen-vcloud-mycloud</feature>
+                                <feature>jclouds-trmk-ecloud</feature>
+                                <feature>jclouds-trystack-nova</feature>
+                                <feature>jclouds-trmk-vcloudexpress</feature>
+                                <feature>jclouds-joyent-cloudapi</feature>
+                                <feature>jclouds-joyent</feature>
+                                <feature>jclouds-greenqloud-storage</feature>
+                                <feature>jclouds-greenqloud-compute</feature>
+                                <feature>jclouds-services</feature>
+                                <feature>jclouds-commands</feature>
+                                <feature>jclouds-chef</feature>
+                                <feature>jclouds-url-handler</feature>
+                            </features>
                             <includeMvnBasedDescriptors>true</includeMvnBasedDescriptors>
                             <repository>target/features-repo</repository>
                         </configuration>
@@ -196,8 +265,9 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="#!/bin/bash" value="#!/bin/sh" dir="target/dependencies/unix/apache-karaf-${karaf.version}/bin">
-                                    <include name="*" />
+                                <replace token="#!/bin/bash" value="#!/bin/sh"
+                                         dir="target/dependencies/unix/apache-karaf-${karaf.version}/bin">
+                                    <include name="*"/>
                                 </replace>
                             </tasks>
                         </configuration>
