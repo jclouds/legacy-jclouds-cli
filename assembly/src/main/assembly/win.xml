@@ -34,10 +34,12 @@
                 <exclude>etc/org.apache.karaf.features.cfg</exclude>
                 <exclude>etc/org.apache.karaf.features.repos.cfg</exclude>
                 <exclude>etc/custom.properties</exclude>
+                <exclude>etc/custom.properties</exclude>
                 <exclude>etc/startup.properties</exclude>
                 <exclude>etc/shell.init.script</exclude>
                 <exclude>etc/org.apache.karaf.management.cfg</exclude>
                 <exclude>etc/org.apache.karaf.shell.cfg</exclude>
+                <exclude>etc/org.apache.karaf.jaas.cfg</exclude>
                 <exclude>readme.txt</exclude>
                 <exclude>LICENSE</exclude>
                 <exclude>NOTICE</exclude>
