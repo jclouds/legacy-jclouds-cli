@@ -13,11 +13,11 @@ It is easy to use, configurable, extensible and it comes into 2 flavors:
 Both flavors support reading configuration from environmental variables, so that you don't have to repeat the same options again and again.
 
 Installation
------------
+------------
 To install the jclouds cli you just need to download the zip or the tarball and extract it to the folder of your choice.
 
 Using the CLI
-----------------
+-------------
 You can use the jclouds cli to perform misc operations, such as creating a node, run scripts on a node, list nodes, destroy a node etc.
 The cli also supports blobstore, so you can create, delete or access a blobstore.
 
@@ -289,7 +289,7 @@ To create a new compute node and apply a recipe:
 
 
 Leveraging environmental variables
------------------------------------
+----------------------------------
 Both in the interactive shell and cli modes, you may find repeating the provider information again and again not really friendly.
 You can completely skip those options by specifying them as environmental variables.
 
