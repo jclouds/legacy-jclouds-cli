@@ -225,11 +225,17 @@ public class Main {
         Enumeration<URL> urls = cl.getResources(getDiscoveryResource());
         while (urls.hasMoreElements()) {
             URL url = urls.nextElement();
-            BufferedReader r = new BufferedReader(new InputStreamReader(url.openStream()));
-            String line = r.readLine();
-            while (line != null) {
-                line = line.trim();
-                if (line.length() > 0 && line.charAt(0) != '#') {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            try {
+                while (true) {
+                    String line = reader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    line = line.trim();
+                    if (line.isEmpty() || line.charAt(0) == '#') {
+                        continue;
+                    }
                     final Class<Action> actionClass = (Class<Action>) cl.loadClass(line);
                     Command cmd = actionClass.getAnnotation(Command.class);
                     Function function = new AbstractCommand() {
@@ -246,9 +252,9 @@ public class Main {
                     };
                     addCommand(cmd, function, commandProcessor);
                 }
-                line = r.readLine();
+            } finally {
+                reader.close();
             }
-            r.close();
         }
     }
 
