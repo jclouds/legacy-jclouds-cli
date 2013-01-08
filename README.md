@@ -21,6 +21,10 @@ Using the CLI
 You can use the jclouds cli to perform misc operations, such as creating a node, run scripts on a node, list nodes, destroy a node etc.
 The cli also supports blobstore, so you can create, delete or access a blobstore.
 
+Note that all cli invocations require parameters to be specified in the following order:
+
+    **[category]** **[action]** **[options]** **[arguments]**
+
 **Compute Service Usage**:
 
     ./bin/jclouds **[category]** **[action]** **[options]** **[arguments]**.
