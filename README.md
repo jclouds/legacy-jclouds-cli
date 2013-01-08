@@ -377,9 +377,9 @@ By default the delimiter is the semicolon symbol, but for each command category 
 
 See also
 --------
-https://github.com/jclouds/jclouds/
-https://github.com/jclouds/jclouds-karaf/
-https://github.com/jclouds/jclouds-chef/
+* https://github.com/jclouds/jclouds/
+* https://github.com/jclouds/jclouds-karaf/
+* https://github.com/jclouds/jclouds-chef/
 
 
 
