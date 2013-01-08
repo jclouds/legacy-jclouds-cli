@@ -14,7 +14,7 @@ Both flavors support reading configuration from environmental variables, so that
 
 Installation
 ------------
-To install the jclouds cli you just need to download the zip or the tarball and extract it to the folder of your choice.
+To install the jclouds cli you just need to download the [zip or the tarball](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jclouds.cli%22%20AND%20a%3A%22jclouds-cli%22) and extract it to the folder of your choice.
 
 Using the CLI
 -------------
