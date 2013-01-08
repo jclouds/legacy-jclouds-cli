@@ -180,12 +180,10 @@
                                 <feature>jclouds-compute</feature>
                                 <feature>jclouds-nodepool</feature>
                                 <feature>jclouds-api-filesystem</feature>
-                                <feature>jclouds-api-eucalyptus</feature>
                                 <feature>jclouds-api-elasticstack</feature>
                                 <feature>jclouds-api-vcloud</feature>
                                 <feature>jclouds-api-byon</feature>
                                 <feature>jclouds-api-swift</feature>
-                                <feature>jclouds-api-nova</feature>
                                 <feature>jclouds-api-openstack-nova</feature>
                                 <feature>jclouds-api-openstack-cinder</feature>
                                 <feature>jclouds-api-s3</feature>
@@ -219,8 +217,6 @@
                                 <feature>jclouds-elastichosts-sat-p</feature>
                                 <feature>jclouds-elastichosts-lax-p</feature>
                                 <feature>jclouds-elastichosts-tor-p</feature>
-                                <feature>jclouds-eucalyptus-s3</feature>
-                                <feature>jclouds-eucalyptus-ec2</feature>
                                 <feature>jclouds-gogrid</feature>
                                 <feature>jclouds-go2cloud-jhb1</feature>
                                 <feature>jclouds-greenhousedata-element-vcloud</feature>
@@ -230,11 +226,9 @@
                                 <feature>jclouds-ninefold-storage</feature>
                                 <feature>jclouds-ninefold-compute</feature>
                                 <feature>jclouds-openhosting-east1</feature>
-                                <feature>jclouds-rimuhosting</feature>
                                 <feature>jclouds-serverlove-z1-man</feature>
                                 <feature>jclouds-skalicloud-sdg-my</feature>
                                 <feature>jclouds-softlayer</feature>
-                                <feature>jclouds-slicehost</feature>
                                 <feature>jclouds-synaptic-storage</feature>
                                 <feature>jclouds-stratogen-vcloud-mycloud</feature>
                                 <feature>jclouds-trmk-ecloud</feature>
