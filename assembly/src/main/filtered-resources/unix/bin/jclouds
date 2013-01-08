@@ -36,10 +36,10 @@ locateHome() {
 }
 
 validateArguments() {
-    if [ "x$CATEGORY" == "x" ]; then
+    if [ "x$CATEGORY" == "x" -o "x$ACTION" == "x" ]; then
         echo "Usage:jclouds {category} {action} {options/arguments}."
         echo ""
-        echo "Categories: node, group, image, location hardware"
+        echo "Categories: node, group, image, location, hardware"
         echo "Actions: list, create, destroy, runscript"
         echo ""
         echo "Options:"
@@ -50,20 +50,6 @@ validateArguments() {
         echo -e "--credential:\t\t The credential."
         exit -1
     fi
-    if [ "x$ACTION" == "x" ]; then
-        echo "Usage:jclouds {category} {action} {options/arguments}."
-        echo ""
-        echo "Categories: node, group, image, location hardware"
-        echo "Actions: list, create, destroy, runscript"
-        echo ""
-        echo "Options:"
-        echo -e "--provider:\t\t The id of the provider."
-        echo -e "--api:\t\t\t The id of the api."
-        echo -e "--endpoint:\t\t The endpoint."
-        echo -e "--identity:\t\t The identity."
-        echo -e "--credential:\t\t The credential."
-        exit -1
-        fi
 }
 warn() {
     echo "${PROGNAME}: $*"
