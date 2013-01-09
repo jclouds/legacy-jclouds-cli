@@ -71,15 +71,15 @@ To list the content of container:
 
 To copy a file to a blob:
 
-    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] mycontainer myblob /path/to/file
+    ./jclouds blobstore write --provider aws-s3 --identity [identity] --credential [credential] mycontainer myblob /path/to/file
 
 To copy using a url to a blob:
 
-    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] mycontainer myblob myurl
+    ./jclouds blobstore write --provider aws-s3 --identity [identity] --credential [credential] --url-payload mycontainer myblob myurl
 
 To write a string value to a blob:
 
-    ./jclouds blobstore list --provider aws-s3 --identity [identity] --credential [credential] --string-payload mycontainer myblob myvalue
+    ./jclouds blobstore write --provider aws-s3 --identity [identity] --credential [credential] --string-payload mycontainer myblob myvalue
 
 
 APIs work in the same manner as providers, but you will also need to specify the endpoint.
@@ -238,15 +238,15 @@ To list the content of container:
 
 To copy a file to a blob:
 
-    jclouds:blobstore list ---name mys3 mycontainer myblob /path/to/file
+    jclouds:blobstore-write --name mys3 mycontainer myblob /path/to/file
 
 To copy using a url to a blob:
 
-    jclouds:blobstore-list --name mys3 mycontainer myblob myurl
+    jclouds:blobstore-write --name mys3 --url-payload mycontainer myblob myurl
 
 To write a string value to a blob:
 
-    jclouds:blobstore-list --name mys3 --string-payload mycontainer myblob myvalue
+    jclouds:blobstore-write --name mys3 --string-payload mycontainer myblob myvalue
 
 **Creating a reusable Chef Service**
 
