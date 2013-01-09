@@ -128,7 +128,7 @@ public class Main {
 
     }
 
-    private void run(final CommandProcessorImpl commandProcessor, String[] args, final InputStream in, final PrintStream out, final PrintStream err) throws Exception {
+    private void run(final CommandProcessorImpl commandProcessor, String[] args, final InputStream in, final PrintStream out, final PrintStream err) throws Throwable {
 
         if (args.length > 0) {
             StringBuilder sb = new StringBuilder();
@@ -165,6 +165,7 @@ public class Main {
                     t.printStackTrace(session.getConsole());
                     session.getConsole().print(Ansi.ansi().fg(Ansi.Color.DEFAULT).toString());
                 }
+                throw t;
             }
         } else {
             // We are going into full blown interactive shell mode.
