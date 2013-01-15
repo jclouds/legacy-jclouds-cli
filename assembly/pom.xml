@@ -15,18 +15,17 @@
   ~  limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>jclouds-cli-pom</artifactId>
         <groupId>org.jclouds.cli</groupId>
-        <version>1.5.5-SNAPSHOT</version>
+        <version>1.5.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jclouds.cli</groupId>
     <artifactId>jclouds-cli</artifactId>
-    <version>1.5.5-SNAPSHOT</version>
+    <version>1.5.5</version>
     <name>jclouds :: cli :: assembly</name>
 
     <dependencies>
@@ -265,18 +264,11 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="#!/bin/bash" value="#!/bin/sh"
-                                         dir="target/dependencies/unix/apache-karaf-${karaf.version}/bin">
-                                    <include name="*"/>
+                                <replace token="#!/bin/bash" value="#!/bin/sh" dir="target/dependencies/unix/apache-karaf-${karaf.version}/bin">
+                                    <include name="*" />
                                 </replace>
-                                <replaceregexp file="target/dependencies/unix/apache-karaf-${karaf.version}/etc/config.properties"
-                                               match="karaf.framework.equinox=*"
-                                               replace="#"
-                                               byline="true"/>
-                                <replaceregexp file="target/dependencies/win/apache-karaf-${karaf.version}/etc/config.properties"
-                                               match="karaf.framework.equinox=*"
-                                               replace="#"
-                                               byline="true"/>
+                                <replaceregexp file="target/dependencies/unix/apache-karaf-${karaf.version}/etc/config.properties" match="karaf.framework.equinox=*" replace="#" byline="true" />
+                                <replaceregexp file="target/dependencies/win/apache-karaf-${karaf.version}/etc/config.properties" match="karaf.framework.equinox=*" replace="#" byline="true" />
                             </tasks>
                         </configuration>
                         <goals>
