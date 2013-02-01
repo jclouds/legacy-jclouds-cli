@@ -157,13 +157,13 @@ public class Main {
                             .a(((CommandNotFoundException) t).getCommand())
                             .a(Ansi.Attribute.INTENSITY_BOLD_OFF)
                             .fg(Ansi.Color.DEFAULT).toString();
-                    session.getConsole().println(str);
+                    err.println(str);
                 } else if (t instanceof CommandException) {
-                    session.getConsole().println(((CommandException) t).getNiceHelp());
+                    err.println(((CommandException) t).getNiceHelp());
                 } else {
-                    session.getConsole().print(Ansi.ansi().fg(Ansi.Color.RED).toString());
-                    t.printStackTrace(session.getConsole());
-                    session.getConsole().print(Ansi.ansi().fg(Ansi.Color.DEFAULT).toString());
+                    err.print(Ansi.ansi().fg(Ansi.Color.RED).toString());
+                    t.printStackTrace(err);
+                    err.print(Ansi.ansi().fg(Ansi.Color.DEFAULT).toString());
                 }
                 throw t;
             }
