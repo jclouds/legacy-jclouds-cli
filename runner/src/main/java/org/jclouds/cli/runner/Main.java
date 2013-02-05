@@ -18,6 +18,7 @@ package org.jclouds.cli.runner;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,6 +48,8 @@ import org.apache.karaf.shell.console.jline.Console;
 import org.apache.karaf.shell.console.jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
+import org.jclouds.blobstore.ContainerNotFoundException;
+import org.jclouds.rest.AuthorizationException;
 
 /**
  * This is forked from Apache Karaf and aligned to the needs of jclouds cli.
@@ -58,9 +61,56 @@ public class Main {
     private String application = System.getProperty("karaf.name", "root");
     private String user = "karaf";
 
+    private static enum Errno {
+        ENOENT(2),
+        EIO(5),
+        EACCES(13),
+        UNKNOWN(255);
+
+        private final int errno;
+
+        Errno(int errno) {
+            this.errno = errno;
+        }
+
+        int getErrno() {
+            return errno;
+        }
+    }
+
     public static void main(String args[]) throws Exception {
         Main main = new Main();
-        main.run(args);
+        try {
+            main.run(args);
+        } catch (CommandNotFoundException cnfe) {
+            String str = Ansi.ansi()
+                    .fg(Ansi.Color.RED)
+                    .a("Command not found: ")
+                    .a(Ansi.Attribute.INTENSITY_BOLD)
+                    .a(cnfe.getCommand())
+                    .a(Ansi.Attribute.INTENSITY_BOLD_OFF)
+                    .fg(Ansi.Color.DEFAULT).toString();
+            System.err.println(str);
+            System.exit(Errno.UNKNOWN.getErrno());
+        } catch (CommandException ce) {
+            System.err.println(ce.getNiceHelp());
+            System.exit(Errno.UNKNOWN.getErrno());
+        } catch (AuthorizationException ae) {
+            System.err.println("Authorization error: " + ae.getMessage());
+            System.exit(Errno.EACCES.getErrno());
+        } catch (ContainerNotFoundException cnfe) {
+            System.err.println("Container not found: " + cnfe.getMessage());
+            System.exit(Errno.ENOENT.getErrno());
+        } catch (FileNotFoundException fnfe) {
+            System.err.println("File not found: " + fnfe.getMessage());
+            System.exit(Errno.ENOENT.getErrno());
+        } catch (IOException ioe) {
+            System.err.println("IO error: " + ioe.getMessage());
+            System.exit(Errno.EIO.getErrno());
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(Errno.UNKNOWN.getErrno());
+        }
     }
 
     /**
@@ -85,12 +135,7 @@ public class Main {
         InputStream in = unwrap(System.in);
         PrintStream out = wrap(unwrap(System.out));
         PrintStream err = wrap(unwrap(System.err));
-        try {
-            run(commandProcessor, args, in, out, err);
-        } catch (Throwable t) {
-            System.exit(1);
-        }
-        System.exit(0);
+        run(commandProcessor, args, in, out, err);
     }
 
 
@@ -128,7 +173,7 @@ public class Main {
 
     }
 
-    private void run(final CommandProcessorImpl commandProcessor, String[] args, final InputStream in, final PrintStream out, final PrintStream err) throws Throwable {
+    private void run(final CommandProcessorImpl commandProcessor, String[] args, final InputStream in, final PrintStream out, final PrintStream err) throws Exception {
 
         if (args.length > 0) {
             StringBuilder sb = new StringBuilder();
@@ -145,28 +190,7 @@ public class Main {
             session.put("USER", user);
             session.put("APPLICATION", application);
             session.put(NameScoping.MULTI_SCOPE_MODE_KEY, Boolean.toString(isMultiScopeMode()));
-
-            try {
-                session.execute(sb);
-            } catch (Throwable t) {
-                if (t instanceof CommandNotFoundException) {
-                    String str = Ansi.ansi()
-                            .fg(Ansi.Color.RED)
-                            .a("Command not found: ")
-                            .a(Ansi.Attribute.INTENSITY_BOLD)
-                            .a(((CommandNotFoundException) t).getCommand())
-                            .a(Ansi.Attribute.INTENSITY_BOLD_OFF)
-                            .fg(Ansi.Color.DEFAULT).toString();
-                    err.println(str);
-                } else if (t instanceof CommandException) {
-                    err.println(((CommandException) t).getNiceHelp());
-                } else {
-                    err.print(Ansi.ansi().fg(Ansi.Color.RED).toString());
-                    t.printStackTrace(err);
-                    err.print(Ansi.ansi().fg(Ansi.Color.DEFAULT).toString());
-                }
-                throw t;
-            }
+            session.execute(sb);
         } else {
             // We are going into full blown interactive shell mode.
 

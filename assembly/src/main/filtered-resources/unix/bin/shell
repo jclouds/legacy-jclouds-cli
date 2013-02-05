@@ -262,6 +262,8 @@ setupDefaults() {
 
     # Setup classpath
     CLASSPATH="$KARAF_HOME/system/org/jclouds/cli/runner/${project.version}/runner-${project.version}.jar"
+    CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/jclouds/jclouds-core/${project.version}/jclouds-core-${project.version}.jar"
+    CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/jclouds/jclouds-blobstore/${project.version}/jclouds-blobstore-${project.version}.jar"
     CLASSPATH="$CLASSPATH:$KARAF_HOME/system/org/apache/karaf/shell/org.apache.karaf.shell.console/${karaf.version}/org.apache.karaf.shell.console-${karaf.version}.jar"
     #We set external libraries for logging.
     CLASSPATH="$CLASSPATH:$KARAF_HOME/lib/other/slf4j-api-${slf4j.version}.jar:$KARAF_HOME/lib/other/slf4j-log4j12-${slf4j.version}.jar:$KARAF_HOME/lib/other/log4j-${log4j.version}.jar"
