@@ -111,6 +111,9 @@ public class Main {
             t.printStackTrace();
             System.exit(Errno.UNKNOWN.getErrno());
         }
+        // We must explicitly exit on success since we do not close
+        // BlobStoreContext and ComputeServiceContext.
+        System.exit(0);
     }
 
     /**
