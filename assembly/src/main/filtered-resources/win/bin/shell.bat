@@ -112,6 +112,8 @@ if "%KARAF_DEBUG%" == "" goto :KARAF_DEBUG_END
 :KARAF_DEBUG_END
 
 set CLASSPATH=%KARAF_HOME%\system\org\jclouds\cli\runner\${project.version}\runner-${project.version}.jar
+set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\system\org\jclouds\jclouds-core\${jclouds.version}\jclouds-core-${jclouds.version}.jar
+set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\system\org\jclouds\jclouds-blobstore\${jclouds.version}\jclouds-blobstore-${jclouds.version}.jar
 set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\system\org\apache\karaf\shell\org.apache.karaf.shell.console\${karaf.version}\org.apache.karaf.shell.console-${karaf.version}.jar
 set CLASSPATH="%CLASSPATH%;%KARAF_HOME%/lib/other/slf4j-api-${slf4j.version}.jar;%KARAF_HOME%/lib/other/slf4j-log4j12-${slf4j.version}.jar;%KARAF_HOME%/lib/other/log4j-${log4j.version}.jar"
 set CLASSPATH=%CLASSPATH%;%KARAF_HOME%\etc\log4j.properties
