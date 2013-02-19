@@ -129,8 +129,8 @@ public class Main {
 
         ClassLoader cl = Main.class.getClassLoader();
         //This is a workaround for windows machines struggling with long class paths.
-        loadJarsFromPath(System.getProperty(KARAF_HOME) + File.separator + "system");
-        loadJarsFromPath(System.getProperty(KARAF_HOME) + File.separator + "deploy");
+        loadJarsFromPath(new File(System.getProperty(KARAF_HOME), "system"));
+        loadJarsFromPath(new File(System.getProperty(KARAF_HOME), "deploy"));
         CommandProcessorImpl commandProcessor = new CommandProcessorImpl(threadio);
 
         discoverCommands(commandProcessor, cl);
@@ -146,9 +146,9 @@ public class Main {
      * Loads Jars found under the specified path.
      * @throws IOException
      */
-    public void loadJarsFromPath(String path) throws IOException {
+    public void loadJarsFromPath(File path) throws IOException {
         Queue<File> dirs = new LinkedList<File>();
-        dirs.add(new File(path));
+        dirs.add(path);
         while (!dirs.isEmpty()) {
             for (File f : dirs.poll().listFiles()) {
                 if (f.isDirectory()) {
