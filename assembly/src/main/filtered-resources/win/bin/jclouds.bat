@@ -84,36 +84,6 @@ if "%KARAF_DATA%" == "" (
     set "KARAF_DATA=%KARAF_BASE%\data"
 )
 
-if [%1]==[] (
-        echo "Usage:jclouds {category} {action} {options/arguments}."
-        echo ""
-        echo "Categories: node, group, image, location hardware"
-        echo "Actions: list, create, destroy, runscript"
-        echo ""
-        echo "Options:"
-        echo "--provider:       The id of the provider."
-        echo "--api:            The id of the api."
-        echo "--endpoint:       The endpoint."
-        echo "--identity:       The identity."
-        echo "--credential:     The credential."
-        goto END
-)
-
-if [%2]==[] (
-        echo "Usage:jclouds {category} {action} {options/arguments}."
-        echo ""
-        echo "Categories: node, group, image, location hardware"
-        echo "Actions: list, create, destroy, runscript"
-        echo ""
-        echo "Options:"
-        echo "--provider:       The id of the provider."
-        echo "--api:            The id of the api."
-        echo "--endpoint:       The endpoint."
-        echo "--identity:       The identity."
-        echo "--credential:     The credential."
-        goto END
-)
-
 set CATEGORY=%1
 set ACTION=%2
 

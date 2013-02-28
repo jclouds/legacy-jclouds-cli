@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
@@ -179,6 +180,45 @@ public class Main {
     private void run(final CommandProcessorImpl commandProcessor, String[] args, final InputStream in, final PrintStream out, final PrintStream err) throws Exception {
 
         if (args.length > 0) {
+            // Commands have the form: jclouds:category-action.
+            List<String> commands = new ArrayList<String>(
+                commandProcessor.getCommands());
+            Collections.sort(commands);
+            if (!commands.contains(args[0])) {
+                final String INDENT = "    ";
+                StringBuffer sb = new StringBuffer(
+                    "Usage: jclouds {category} {action} {options/arguments}");
+
+                // list commands
+                sb.append("\n\nValid commands:");
+                for (String command : commands) {
+                    if (command.startsWith("jclouds:")) {
+                        command = command.substring("jclouds:".length());
+                        int index = command.indexOf('-');
+                        String category = command.substring(0, index);
+                        String action = command.substring(index + 1);
+                        sb.append('\n').append(INDENT).append(category)
+                            .append(' ').append(action);
+                        // TODO: expose command descriptions
+                    }
+                }
+
+                // list options
+                sb.append("\n\nOptions:")
+                    .append('\n').append(INDENT)
+                    .append("--provider:   The id of the provider")
+                    .append('\n').append(INDENT)
+                    .append("--api:        The id of the api")
+                    .append('\n').append(INDENT)
+                    .append("--endpoint:   The endpoint")
+                    .append('\n').append(INDENT)
+                    .append("--identity:   The identity")
+                    .append('\n').append(INDENT)
+                    .append("--credential: The credential");
+
+                throw new CommandNotFoundException(sb.toString());
+            }
+
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
                 if (i > 0) {
