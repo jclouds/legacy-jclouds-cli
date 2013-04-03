@@ -50,6 +50,7 @@ import org.apache.karaf.shell.console.jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 import org.jclouds.blobstore.ContainerNotFoundException;
+import org.jclouds.blobstore.KeyNotFoundException;
 import org.jclouds.rest.AuthorizationException;
 
 /**
@@ -108,6 +109,9 @@ public class Main {
         } catch (IOException ioe) {
             System.err.println("IO error: " + ioe.getMessage());
             System.exit(Errno.EIO.getErrno());
+        } catch (KeyNotFoundException knfe) {
+            System.err.println("Blob not found: " + knfe.getMessage());
+            System.exit(Errno.ENOENT.getErrno());
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(Errno.UNKNOWN.getErrno());
