@@ -28,7 +28,7 @@
     <artifactId>jclouds-cli-pom</artifactId>
     <packaging>pom</packaging>
     <name>jclouds :: cli</name>
-    <version>1.6.0-SNAPSHOT</version>
+    <version>1.7.0-SNAPSHOT</version>
 
     <url>https://github.com/jclouds/jclouds-cli</url>
     <licenses>
